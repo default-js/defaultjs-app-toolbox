@@ -1,7 +1,7 @@
 {
 	"name": "@default-js/defaultjs-app-toolbox",
 	"buildname": "defaultjs-app-toolbox",
-	"version": "1.0.0-beta.21",
+	"version": "1.0.0-beta.1",
 	"description": "Simple toolbox to build web apps",
 	"main": "./index.js",
 	"scripts": {
@@ -47,7 +47,7 @@
 		"@default-js/defaultjs-dynamic-requester": "^1.0.0-beta.1",
 		"@default-js/defaultjs-expression-language": "^1.0.0-beta.12",
 		"@default-js/defaultjs-extdom": "^1.0.0-beta.25",
-		"@default-js/defaultjs-html-components": "^1.0.0-beta.21",
+		"@default-js/defaultjs-html-components": "^1.0.0-beta.22",
 		"@default-js/defaultjs-template-language": "^1.0.0-beta.19"
 	},
 	"directories": {

@@ -1,6 +1,6 @@
 import Component from "@default-js/defaultjs-html-components/src/Component";
 import { define } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
-import { loadTemplate, ATTR_TEMPLATE } from "@default-js/defaultjs-html-components/src/TemplateHelper";
+import { loadTemplate, ATTR_TEMPLATE } from "@default-js/defaultjs-html-components/src/utils/TemplateHelper";
 import Resolver from "@default-js/defaultjs-expression-language/src/ExpressionResolver";
 import NODENAME from "./Nodename";
 import { EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE } from "./Events";
