@@ -28,36 +28,36 @@ class View extends Component {
 	}
 
 	async display({ route, context, view }) {
-		if (view)
-			throw new Error("you must override the display function!");
-		this.root.empty();
+		if (view) throw new Error("you must override the display function!");
+
+		const { root, app } = this;
+		root.empty();
 
 		let component = route.stateful ? ROUTEDATA.value(route, "component") : null;
 		if (!component) {
 			component = await route.component();
 			if (component instanceof Template) {
 				await Renderer.render({
-					container: this.root, data: {
+					container: root,
+					data: {
 						$view: this,
-						$app: this.app,
-						$store: this.app.store,
+						$app: app,
+						$store: app.store,
 						$route: route,
-						$data: data
-					}, template: component
+						$context: context,
+					},
+					template: component,
 				});
-				component = NodeList.from(view.childNodes);
+				component = NodeList.from(root.childNodes);
 			} else {
-				if (component instanceof View)
-					await component.display({ route, context, view: this })
-				this.root.append(component);
+				if (component instanceof View) await component.display({ route, context, view: this });
+				root.append(component);
 			}
 
-			if (route.stateful)
-				ROUTEDATA.value(route, "component", component);
+			if (route.stateful) ROUTEDATA.value(route, "component", component);
 		} else {
-			if (component instanceof View)
-				await component.display({ route, context, view: this })
-			this.root.append(component);
+			if (component instanceof View) await component.display({ route, context, view: this });
+			root.append(component);
 		}
 	}
 }
