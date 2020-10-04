@@ -54,6 +54,8 @@ class Application extends Component {
 		if (typeof route === "string") route = findRoute(this, route);
 		if (route instanceof RouteLink){
 			refresh = refresh != null ? refresh : route.refresh;
+			if(context == null)			
+				context = await buildRouteContext(route.context, this);
 			route = findRoute(this, route.target);
 		}
 		if(!(route instanceof Route))
