@@ -1,7 +1,7 @@
 {
 	"name": "@default-js/defaultjs-app-toolbox",
 	"buildname": "defaultjs-app-toolbox",
-	"version": "1.0.0-beta.3",
+	"version": "1.0.0-beta.4",
 	"description": "Simple toolbox to build web apps",
 	"main": "./index.js",
 	"scripts": {

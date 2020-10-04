@@ -34,7 +34,7 @@ class Application extends Component {
 
 		this.ready.then(() => {
 			this.root.on([ROUTE_CLICK, EVENT_TO_ROUTE], async (event) => {
-				this.route(event.target);
+				this.route({route: event.target});
 			});
 		});
 	}
@@ -47,18 +47,23 @@ class Application extends Component {
 		return this.root.find(Route.NODENAME);
 	}
 
-	async route(route) {
+	async route({route, refresh = null, context = null}) {
 		if (arguments.length == 0) return this.__route__;
 
-		let context = null;
+		
 		if (typeof route === "string") route = findRoute(this, route);
-		else if (route instanceof RouteLink || route instanceof Route) {
-			context = await buildRouteContext(route.context, this);
+		if (route instanceof RouteLink){
+			refresh = refresh != null ? refresh : route.refresh;
 			route = findRoute(this, route.target);
-		} else throw new Error("Unsupported route type!");
+		}
+		if(!(route instanceof Route))
+			throw new Error("Unsupported route type!");
 
-		if (this.__route__ == route) return;
-
+		if(!refresh && this.__route__ == route) return;
+		
+		if(context == null)
+			context = await buildRouteContext(route.context, this);
+			
 		if (this.__route__) this.__route__.active = false;
 		await this.view.display({ route, context });
 		this.__route__ = route;

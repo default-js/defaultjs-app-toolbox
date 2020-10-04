@@ -80,6 +80,10 @@ class Route extends Component {
 
 	get context(){
 		return this.attr(ATTR_CONTEXT);
+	}	
+	
+	get refresh(){
+		return this.hasAttribute(ATTR_REFRESH);
 	}
 
 	async component() {		
