@@ -75,7 +75,7 @@ class Route extends Component {
 	}
 	
 	get stateful() {
-		return this.attr(ATTR_STATEFUL);
+		return this.hasAttribute(ATTR_STATEFUL);
 	}
 
 	get context(){

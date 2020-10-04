@@ -27,14 +27,14 @@ class View extends Component {
 		this.__app__ = app;
 	}
 
-	async display({ route, context, view }) {
+	async display({ route, context, view, refresh = false }) {
 		if (view) throw new Error("you must override the display function!");
 
 		const { root, app } = this;
 		root.empty();
 
 		let component = route.stateful ? ROUTEDATA.value(route, "component") : null;
-		if (!component) {
+		if (refresh || !component) {
 			component = await route.component();
 			if (component instanceof Template) {
 				await Renderer.render({
