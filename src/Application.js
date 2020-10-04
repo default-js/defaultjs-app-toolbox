@@ -1,5 +1,5 @@
 import Component from "@default-js/defaultjs-html-components/src/Component";
-import { define ,toNodeName } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
+import { define, toNodeName } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
 import { findClosestInDepth } from "@default-js/defaultjs-html-components/src/utils/NodeHelper";
 import { EVENT_CLICK as ROUTE_CLICK } from "./Route/Events";
 import { EVENT_TO_ROUTE } from "./RouteLink/Events";
@@ -12,17 +12,17 @@ const NODENAME = toNodeName("application");
 export const EVENT_STORE_CHANGED = "app-store-changed";
 
 const findRoute = (app, name) => {
-    const selector = `${Route.NODENAME}[name="${name}"]`;
-    return app.find(selector).first();
-}
+	const selector = `${Route.NODENAME}[name="${name}"]`;
+	return app.find(selector).first();
+};
 
 const buildRouteContext = async (context, app) => {
-	try{
+	try {
 		return Resolver.resolve(context, app.store, null);
-	} catch(e){
+	} catch (e) {
 		return null;
 	}
-}
+};
 
 class Application extends Component {
 	static get NODENAME() {
@@ -34,7 +34,7 @@ class Application extends Component {
 
 		this.ready.then(() => {
 			this.root.on([ROUTE_CLICK, EVENT_TO_ROUTE], async (event) => {
-                this.route(event.target);				
+				this.route(event.target);
 			});
 		});
 	}
@@ -45,30 +45,28 @@ class Application extends Component {
 
 	async routes() {
 		return this.root.find(Route.NODENAME);
-    }
-    
-    async route(route){
-        if(arguments.length == 0)
-            return this.__route__;
+	}
+
+	async route(route) {
+		if (arguments.length == 0) return this.__route__;
 
 		let context = null;
-        if(typeof route === "string")
-            route = findRoute(this, route);        
-        else if(route instanceof RouteLink){
+		if (typeof route === "string") route = findRoute(this, route);
+		else if (route instanceof RouteLink || route instanceof Route) {
 			context = await buildRouteContext(route.context, this);
-            route = findRoute(this, route.target);
-		}
+			route = findRoute(this, route.target);
+		} else throw new Error("Unsupported route type!");
 
-		if(this.__route__ == route) return;
+		if (this.__route__ == route) return;
 
-        if (this.__route__) this.__route__.active = false;
-        await this.view.display({route, context});
-        this.__route__ = route;
-        route.active = true;
-    }
+		if (this.__route__) this.__route__.active = false;
+		await this.view.display({ route, context });
+		this.__route__ = route;
+		route.active = true;
+	}
 
 	get view() {
-		if (!this.__view__){
+		if (!this.__view__) {
 			this.__view__ = findClosestInDepth(this.root, (node) => {
 				return node instanceof View;
 			});
@@ -83,7 +81,6 @@ class Application extends Component {
 		return this.__store__;
 	}
 }
-
 
 define(Application);
 export default Application;

@@ -4,7 +4,7 @@ import { loadTemplate, ATTR_TEMPLATE } from "@default-js/defaultjs-html-componen
 import Resolver from "@default-js/defaultjs-expression-language/src/ExpressionResolver";
 import NODENAME from "./Nodename";
 import { EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE } from "./Events";
-import { ATTR_NAME, ATTR_ACTIVE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL } from "./Attributes";
+import { ATTR_NAME, ATTR_ACTIVE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_CONTEXT } from "./Attributes";
 
 const ATTRIBUTES = [ATTR_NAME, ATTR_TEMPLATE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL];
 const EVENTS = [EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE];
@@ -78,19 +78,12 @@ class Route extends Component {
 		return this.attr(ATTR_STATEFUL);
 	}
 
-	async component() {
-		
+	get context(){
+		return this.attr(ATTR_CONTEXT);
+	}
+
+	async component() {		
 		return buildComponent(this);
-		/*
-		if (!this.__component__) {
-			this.__component__ = await buildComponent(this);
-			if (this.__component__ instanceof Template) {
-				await Renderer.render({ container: view, data, template: this.__component__ });
-				this.__component__ = NodeList.from(view.childNodes);
-			}
-		}
-		
-		return this.__component__;*/
 	}
 }
 
