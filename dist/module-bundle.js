@@ -701,7 +701,7 @@ __webpack_require__.r(__webpack_exports__);
 
 _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].global.defaultjs = _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].global.defaultjs || {};
 _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].global.defaultjs.extdom = _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].global.defaultjs.extdom || {
-	VERSION : "1.0.0-beta.6",
+	VERSION : "1.0.0-beta.7",
 	utils : {
 		Utils: _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"]
 	}

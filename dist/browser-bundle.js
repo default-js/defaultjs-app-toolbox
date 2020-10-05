@@ -109,7 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 _default_js_defaultjs_common_utils_src_Global__WEBPACK_IMPORTED_MODULE_0__["default"].defaultjs = _default_js_defaultjs_common_utils_src_Global__WEBPACK_IMPORTED_MODULE_0__["default"].defaultjs || {};
 _default_js_defaultjs_common_utils_src_Global__WEBPACK_IMPORTED_MODULE_0__["default"].defaultjs.app = _default_js_defaultjs_common_utils_src_Global__WEBPACK_IMPORTED_MODULE_0__["default"].defaultjs.app || {};
 _default_js_defaultjs_common_utils_src_Global__WEBPACK_IMPORTED_MODULE_0__["default"].defaultjs.app.toolbox = _default_js_defaultjs_common_utils_src_Global__WEBPACK_IMPORTED_MODULE_0__["default"].defaultjs.app.toolbox || {
-	VERSION : "1.0.0-beta.6",
+	VERSION : "1.0.0-beta.7",
     Application: _src_Application__WEBPACK_IMPORTED_MODULE_1__["default"],
 	View: _src_View__WEBPACK_IMPORTED_MODULE_4__["default"],
     Route: _src_Route__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -726,7 +726,7 @@ __webpack_require__.r(__webpack_exports__);
 
 _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].global.defaultjs = _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].global.defaultjs || {};
 _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].global.defaultjs.extdom = _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].global.defaultjs.extdom || {
-	VERSION : "1.0.0-beta.6",
+	VERSION : "1.0.0-beta.7",
 	utils : {
 		Utils: _utils_Utils__WEBPACK_IMPORTED_MODULE_0__["default"]
 	}
