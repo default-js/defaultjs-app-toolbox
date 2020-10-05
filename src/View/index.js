@@ -6,7 +6,7 @@ import WeakData from "@default-js/defaultjs-html-components/src/utils/WeakData";
 
 const ROUTEDATA = new WeakData();
 
-class View extends Component {
+class View extends Component {	
 	static get NODENAME() {
 		return NODENAME;
 	}

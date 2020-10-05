@@ -1,6 +1,7 @@
 import Component from "@default-js/defaultjs-html-components/src/Component";
 import { define, toNodeName } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
 import { findClosestInDepth } from "@default-js/defaultjs-html-components/src/utils/NodeHelper";
+import { attributeChangeEventname } from "@default-js/defaultjs-html-components/src/utils/EventHelper"
 import { EVENT_CLICK as ROUTE_CLICK } from "./Route/Events";
 import { EVENT_TO_ROUTE } from "./RouteLink/Events";
 import Resolver from "@default-js/defaultjs-expression-language/src/ExpressionResolver";
@@ -10,6 +11,7 @@ import View from "./View";
 
 const NODENAME = toNodeName("application");
 export const EVENT_STORE_CHANGED = "app-store-changed";
+export const ATTR_ROUTE = "route";
 
 const findRoute = (app, name) => {
 	const selector = `${Route.NODENAME}[name="${name}"]`;
@@ -24,7 +26,14 @@ const buildRouteContext = async (context, app) => {
 	}
 };
 
+const ATTRIBUTES = [ATTR_ROUTE]
+
 class Application extends Component {
+		
+	static get observedAttributes() {
+		return ATTRIBUTES;
+	}
+	
 	static get NODENAME() {
 		return NODENAME;
 	}
@@ -36,7 +45,20 @@ class Application extends Component {
 			this.root.on([ROUTE_CLICK, EVENT_TO_ROUTE], async (event) => {
 				this.route({ route: event.target });
 			});
+			
+			this.on(attributeChangeEventname(ATTR_ROUTE, this), () => {
+				if(this.hasAttribute(ATTR_ROUTE))
+					this.route({ route: this.attr(ATTR_ROUTE) });
+			});
+			
+			if(this.hasAttribute(ATTR_ROUTE))
+				this.route({ route: this.attr(ATTR_ROUTE) });
 		});
+		
+	}
+	
+	async init() {
+		
 	}
 
 	get root() {
