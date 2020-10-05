@@ -23,7 +23,7 @@ const buildComponent = async (route) => {
 		const attributes = await getTagAttributes(route);
 
 		const element = new clazz();
-		for (attribute in attributes) {
+		for (let attribute in attributes) {
 			const value = attributes[attribute];
 			if (typeof value === "string") element.attr(attribute, value);
 		}

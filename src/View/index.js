@@ -6,7 +6,7 @@ import WeakData from "@default-js/defaultjs-html-components/src/utils/WeakData";
 
 const ROUTEDATA = new WeakData();
 
-class View extends Component {	
+class View extends Component {
 	static get NODENAME() {
 		return NODENAME;
 	}
@@ -50,13 +50,19 @@ class View extends Component {
 				});
 				component = NodeList.from(root.childNodes);
 			} else {
-				if (component instanceof View) await component.display({ route, context, view: this });
+				if (component instanceof View) {
+					component.app = app;
+					await component.display({ route, context, view: this });
+				}
 				root.append(component);
 			}
 
 			if (route.stateful) ROUTEDATA.value(route, "component", component);
 		} else {
-			if (component instanceof View) await component.display({ route, context, view: this });
+			if (component instanceof View) {
+				component.app = app;
+				await component.display({ route, context, view: this });
+			}
 			root.append(component);
 		}
 	}
