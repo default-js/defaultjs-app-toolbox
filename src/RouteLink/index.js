@@ -2,7 +2,7 @@ import Component from "@default-js/defaultjs-html-components/src/Component";
 import { define } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
 import NODENAME from "./Nodename";
 import { EVENT_TO_ROUTE } from "./Events";
-import { ATTR_TARGET, ATTR_CONTEXT, ATTR_REFRESH} from "./Attributes";
+import { ATTR_TARGET, ATTR_CONTEXT, ATTR_REFRESH, ATTR_VIEW } from "./Attributes";
 import {} from "@default-js/defaultjs-html-components/src/utils/NodeHelper";
 
 const ATTRIBUTES = [ATTR_TARGET, ATTR_CONTEXT];
@@ -32,15 +32,19 @@ class RouteLink extends Component {
 
 	async init() {}
 
+	get view() {
+		return this.attr(ATTR_VIEW);
+	}
+
 	get target() {
 		return this.attr(ATTR_TARGET);
 	}
-	
-	get context(){
+
+	get context() {
 		return this.attr(ATTR_CONTEXT);
 	}
 
-	get refresh(){
+	get refresh() {
 		return this.hasAttribute(ATTR_REFRESH);
 	}
 }

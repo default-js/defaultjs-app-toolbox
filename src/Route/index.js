@@ -4,9 +4,9 @@ import { loadTemplate, ATTR_TEMPLATE } from "@default-js/defaultjs-html-componen
 import Resolver from "@default-js/defaultjs-expression-language/src/ExpressionResolver";
 import NODENAME from "./Nodename";
 import { EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE } from "./Events";
-import { ATTR_NAME, ATTR_ACTIVE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_CONTEXT } from "./Attributes";
+import { ATTR_NAME, ATTR_ACTIVE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_CONTEXT, ATTR_VIEW } from "./Attributes";
 
-const ATTRIBUTES = [ATTR_NAME, ATTR_TEMPLATE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL];
+const ATTRIBUTES = [ATTR_NAME, ATTR_TEMPLATE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_VIEW];
 const EVENTS = [EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE];
 const getTagAttributes = async (route) => {
 	const attributes = route.attr(ATTR_COMPONENT_TAG_ATTRIBUTES) || "{}";
@@ -57,6 +57,10 @@ class Route extends Component {
 
 	get name() {
 		return this.attr(ATTR_NAME);
+	}
+
+	get view(){
+		return this.attr(ATTR_VIEW);
 	}
 
 	get active() {

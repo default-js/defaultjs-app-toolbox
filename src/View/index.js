@@ -3,10 +3,18 @@ import { define } from "@default-js/defaultjs-html-components/src/utils/DefineCo
 import NODENAME from "./Nodename";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
 import WeakData from "@default-js/defaultjs-html-components/src/utils/WeakData";
+import { ATTR_VIEW } from "../Application";
 
 const ROUTEDATA = new WeakData();
 
+const ATTR_NAME = "name";
+const ATTRIBUTES = [ATTR_NAME];
 class View extends Component {
+
+	static get observedAttributes() {
+		return ATTRIBUTES;
+	}
+
 	static get NODENAME() {
 		return NODENAME;
 	}
@@ -19,6 +27,11 @@ class View extends Component {
 		return this;
 	}
 
+	get name(){
+		return this.attr(ATTR_NAME);
+	}
+
+
 	get app() {
 		return this.__app__;
 	}
@@ -27,9 +40,14 @@ class View extends Component {
 		this.__app__ = app;
 	}
 
+	get route(){
+		return this.__route__;
+	}
+
 	async display({ route, context, view, refresh = false }) {
 		if (view) throw new Error("you must override the display function!");
 
+		this.__route__ = route;
 		const { root, app } = this;
 		root.empty();
 
