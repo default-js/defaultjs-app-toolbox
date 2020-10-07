@@ -52,10 +52,9 @@ class View extends Component {
 			} else {
 				if (component instanceof View) {
 					component.app = app;
-					if (!component.ready.resolved)
-						component.ready.then(() => {
-							component.display({ route, context, view: this });
-						});
+					component.ready.then(() => {
+						component.display({ route, context, view: this });
+					});
 				}
 				root.append(component);
 			}
@@ -64,10 +63,9 @@ class View extends Component {
 		} else {
 			if (component instanceof View) {
 				component.app = app;
-				if (!component.ready.resolved)
-					component.ready.then(() => {
-						component.display({ route, context, view: this });
-					});
+				component.ready.then(() => {
+					component.display({ route, context, view: this });
+				});
 			}
 			root.append(component);
 		}
