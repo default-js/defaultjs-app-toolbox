@@ -2,12 +2,16 @@ import Component from "@default-js/defaultjs-html-components/src/Component";
 import { define, toNodeName } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
 import { findClosestInDepth } from "@default-js/defaultjs-html-components/src/utils/NodeHelper";
 import { attributeChangeEventname } from "@default-js/defaultjs-html-components/src/utils/EventHelper";
+import { privatePropertyAccessor } from "@default-js/defaultjs-common-utils/src/PrivateProperty";
 import { EVENT_CLICK as ROUTE_CLICK } from "./Route/Events";
 import { EVENT_TO_ROUTE } from "./RouteLink/Events";
 import Resolver from "@default-js/defaultjs-expression-language/src/ExpressionResolver";
 import Route from "./Route";
 import RouteLink from "./RouteLink";
 import View from "./View";
+
+const _view = privatePropertyAccessor("view");
+const _store = privatePropertyAccessor("store");
 
 const NODENAME = toNodeName("application");
 export const EVENT_STORE_CHANGED = "app-store-changed";
@@ -58,8 +62,8 @@ class Application extends Component {
 		return NODENAME;
 	}
 
-	constructor() {
-		super();
+	constructor(setting) {
+		super(setting || {});
 
 		this.ready.then(() => {
 			this.root.on([ROUTE_CLICK, EVENT_TO_ROUTE], async (event) => {
@@ -75,10 +79,6 @@ class Application extends Component {
 	}
 
 	async init() {}
-
-	get root() {
-		return this;
-	}
 
 	async routes() {
 		return this.root.find(Route.NODENAME);
@@ -111,17 +111,23 @@ class Application extends Component {
 	}
 
 	get view() {
-		if (!this.__view__) {
-			this.__view__ = findView(this, this.attr(ATTR_VIEW));
-			this.__view__.app = this;
+		let view = _view(this);
+		if (!view) {
+			view = findView(this, this.attr(ATTR_VIEW));
+			_view(this, view);
+			view.app = this;
 		}
 
-		return this.__view__;
+		return view;
 	}
 
 	get store() {
-		if (!this.__store__) this.__store__ = {};
-		return this.__store__;
+		let store = _store(this);
+		if (!store){
+			store = {};
+			_store(this, store);
+		}
+		return store;
 	}
 }
 

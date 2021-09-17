@@ -22,8 +22,8 @@ class RouteLink extends Component {
 		return EVENTS;
 	}
 
-	constructor() {
-		super();
+	constructor(setting) {
+		super(setting || {});
 		this.on("click", (event) => {
 			event.preventDefault();
 			this.trigger(EVENT_TO_ROUTE);

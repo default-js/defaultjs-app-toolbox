@@ -1,22 +1,29 @@
 import Component from "@default-js/defaultjs-html-components/src/Component";
 import { define } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
-import { loadTemplate, ATTR_TEMPLATE } from "@default-js/defaultjs-html-components/src/utils/TemplateHelper";
+import Template, {NODE_ATTRIBUTE_TEMPLATE}  from "@default-js/defaultjs-template-language/src/Template";
 import Resolver from "@default-js/defaultjs-expression-language/src/ExpressionResolver";
+import { privatePropertyAccessor } from "@default-js/defaultjs-common-utils/src/PrivateProperty";
 import NODENAME from "./Nodename";
 import { EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE } from "./Events";
 import { ATTR_NAME, ATTR_ACTIVE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_CONTEXT, ATTR_VIEW } from "./Attributes";
 
-const ATTRIBUTES = [ATTR_NAME, ATTR_TEMPLATE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_VIEW];
+const ATTRIBUTES = [ATTR_NAME, NODE_ATTRIBUTE_TEMPLATE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_VIEW];
 const EVENTS = [EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE];
 const getTagAttributes = async (route) => {
 	const attributes = route.attr(ATTR_COMPONENT_TAG_ATTRIBUTES) || "{}";
 	return Resolver.resolve(attributes, {}, {});
 };
 
+const _template = privatePropertyAccessor(NODE_ATTRIBUTE_TEMPLATE);
+
 const buildComponent = async (route) => {
-	if (route.hasAttribute(ATTR_TEMPLATE)) {
-		if (!route.__template__) route.__template__ = loadTemplate(route, null);
-		return route.__template__;
+	if (route.hasAttribute(NODE_ATTRIBUTE_TEMPLATE)) {
+		let template = _template(route);
+		if (!template) {
+			template = await Template.loadNodeTemplate(route, null, false);
+			_template(route, template);
+		}
+		return template;
 	} else {
 		const tag = route.attr(ATTR_COMPONENT_TAG);
 		const clazz = customElements.get(tag);
@@ -45,8 +52,8 @@ class Route extends Component {
 		return EVENTS;
 	}
 
-	constructor() {
-		super();
+	constructor(setting) {
+		super(setting || {});
 		this.on("click", () => {
 			if(!this.active)
 				this.trigger(EVENT_CLICK);

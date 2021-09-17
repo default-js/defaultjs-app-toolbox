@@ -2,8 +2,12 @@ import Component from "@default-js/defaultjs-html-components/src/Component";
 import { define } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
 import NODENAME from "./Nodename";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
+import { privatePropertyAccessor } from "@default-js/defaultjs-common-utils/src/PrivateProperty";
 import WeakData from "@default-js/defaultjs-html-components/src/utils/WeakData";
 import { ATTR_VIEW } from "../Application";
+
+const _app = privatePropertyAccessor("app");
+const _route = privatePropertyAccessor("route");
 
 const ROUTEDATA = new WeakData();
 
@@ -19,8 +23,8 @@ class View extends Component {
 		return NODENAME;
 	}
 
-	constructor() {
-		super();
+	constructor(setting) {
+		super(setting || {});
 	}
 
 	get root() {
@@ -31,23 +35,22 @@ class View extends Component {
 		return this.attr(ATTR_NAME);
 	}
 
-
 	get app() {
-		return this.__app__;
+		return _app(this);
 	}
 
 	set app(app) {
-		this.__app__ = app;
+		_app(this, app);
 	}
 
 	get route(){
-		return this.__route__;
+		return _route(this);
 	}
 
 	async display({ route, context, view, refresh = false }) {
 		if (view) throw new Error("you must override the display function!");
 
-		this.__route__ = route;
+		_route(this, route);
 		const { root, app } = this;
 		root.empty();
 
