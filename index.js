@@ -1,4 +1,5 @@
 import GLOBAL from "@default-js/defaultjs-common-utils/src/Global";
+import "@default-js/defaultjs-extdom";
 import Application from "./src/Application";
 import Route from "./src/Route";
 import RouteLink from "./src/RouteLink";

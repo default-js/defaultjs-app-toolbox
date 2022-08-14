@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test Case 1</title>
+    </head>
+    <body>
+        <d-application route="default">
+            <ul>
+                <li><d-route name="default" template="#default">default</d-route></li>
+                <li></li>
+            </ul>
+
+            <d-view></d-view>
+        </d-application>
+
+        <template id="default">
+            <h1>default</h1>
+            <d-route name="other" template="#other">other</d-route>
+        </template>
+
+        <template id="other">
+            <h1>other</h1>
+        </template>
+
+        <script src="/browser-bundle-defaultjs-app-toolbox.js"></script>
+
+    </body>
+
+</html>
