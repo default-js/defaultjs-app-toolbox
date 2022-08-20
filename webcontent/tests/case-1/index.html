@@ -2,27 +2,36 @@
 <html>
     <head>
         <title>Test Case 1</title>
+        <link rel="stylesheet" href="/css/app-toolbox.css">
     </head>
     <body>
-        <d-application route="default">
-            <ul>
-                <li><d-route name="default" template="#default">default</d-route></li>
-                <li></li>
-            </ul>
+        
+        <template id="default">
+            <h1>default</h1>
+            <d-route-link target="other-2">other</d-route>
+        </template>
 
+        <d-application route="default">
+            <d-renderer data="navigation.json" render-mode="self-replace" condition>
+                <ul>
+                    <li><d-route name="default" template="#default">default</d-route></li>
+                    <jstl jstl-foreach="${nav}" jstl-foreach-var="item">
+                        <li><d-route name="${item}" template="#${item}">${item}</d-route></li>
+                    </jstl>
+                </ul>
+            </d-renderer>
             <d-view></d-view>
         </d-application>
 
-        <template id="default">
-            <h1>default</h1>
-            <d-route name="other" template="#other">other</d-route>
+
+        <template id="other-1">
+            <h1>other-1</h1>
+        </template>
+        <template id="other-2">
+            <h1>other-2</h1>
         </template>
 
-        <template id="other">
-            <h1>other</h1>
-        </template>
-
-        <script src="/browser-bundle-defaultjs-app-toolbox.js"></script>
+        <script src="/dev-defaultjs-app-toolbox.js"></script>
 
     </body>
 

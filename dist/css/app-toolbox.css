@@ -1,0 +1,17 @@
+d-application, 
+d-view 
+{
+    display: block;
+}
+
+d-route, 
+d-route-link
+{
+    display: inline-block;
+    cursor: pointer;
+}
+
+d-route[active]
+{
+    cursor: not-allowed;
+}

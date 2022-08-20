@@ -27,10 +27,6 @@ class View extends Component {
 		super(setting || {});
 	}
 
-	get root() {
-		return this;
-	}
-
 	get name(){
 		return this.attr(ATTR_NAME);
 	}

@@ -4,7 +4,7 @@ import Template, {NODE_ATTRIBUTE_TEMPLATE}  from "@default-js/defaultjs-template
 import Resolver from "@default-js/defaultjs-expression-language/src/ExpressionResolver";
 import { privatePropertyAccessor } from "@default-js/defaultjs-common-utils/src/PrivateProperty";
 import NODENAME from "./Nodename";
-import { EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE } from "./Events";
+import { EVENT_INIT, EVENT_CLICK, EVENT_ACTIVATE, EVENT_DEACTIVATE } from "./Events";
 import { ATTR_NAME, ATTR_ACTIVE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_CONTEXT, ATTR_VIEW } from "./Attributes";
 
 const ATTRIBUTES = [ATTR_NAME, NODE_ATTRIBUTE_TEMPLATE, ATTR_COMPONENT_TAG, ATTR_COMPONENT_TAG_ATTRIBUTES, ATTR_STATEFUL, ATTR_VIEW];
@@ -52,6 +52,8 @@ class Route extends Component {
 		return EVENTS;
 	}
 
+	#initialized = false;
+
 	constructor(setting) {
 		super(setting || {});
 		this.on("click", () => {
@@ -60,7 +62,15 @@ class Route extends Component {
 		});
 	}
 
-	async init() {}
+	async init() {
+		await super.init();
+		if(!this.#initialized){
+			this.#initialized = true;
+			this.trigger(EVENT_INIT);
+			if(this.active)
+				this.trigger(EVENT_CLICK);
+		}
+	}
 
 	get name() {
 		return this.attr(ATTR_NAME);
