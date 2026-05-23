@@ -45,7 +45,7 @@ const findView = (app, name) => {
 
 const buildRouteContext = async (context, app) => {
 	try {
-		return Resolver.resolve(context, app.store, null);
+		return Resolver.resolve(context || "{}", app.store, null);
 	} catch (e) {
 		return null;
 	}
@@ -58,9 +58,9 @@ class Application extends Component {
 		return ATTRIBUTES;
 	}
 
-	static get NODENAME() {
-		return NODENAME;
-	}
+	static NODENAME = NODENAME;
+
+	#initialized = false;
 
 	constructor(setting) {
 		super(setting || {});

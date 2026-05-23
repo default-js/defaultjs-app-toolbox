@@ -2,12 +2,8 @@ import Component from "@default-js/defaultjs-html-components/src/Component";
 import { define } from "@default-js/defaultjs-html-components/src/utils/DefineComponentHelper";
 import NODENAME from "./Nodename";
 import { Renderer, Template } from "@default-js/defaultjs-template-language";
-import { privatePropertyAccessor } from "@default-js/defaultjs-common-utils/src/PrivateProperty";
 import WeakData from "@default-js/defaultjs-html-components/src/utils/WeakData";
 import { ATTR_VIEW } from "../Application";
-
-const _app = privatePropertyAccessor("app");
-const _route = privatePropertyAccessor("route");
 
 const ROUTEDATA = new WeakData();
 
@@ -15,13 +11,11 @@ const ATTR_NAME = "name";
 const ATTRIBUTES = [ATTR_NAME];
 class View extends Component {
 
-	static get observedAttributes() {
-		return ATTRIBUTES;
-	}
+	static observedAttributes=  ATTRIBUTES;
+	static NODENAME = NODENAME;
 
-	static get NODENAME() {
-		return NODENAME;
-	}
+	#app = null;
+	#route = null;
 
 	constructor(setting) {
 		super(setting || {});
@@ -32,21 +26,21 @@ class View extends Component {
 	}
 
 	get app() {
-		return _app(this);
+		return this.#app;
 	}
 
 	set app(app) {
-		_app(this, app);
+		this.#app = app;
 	}
 
 	get route(){
-		return _route(this);
+		return this.#route;
 	}
 
 	async display({ route, context, view, refresh = false }) {
 		if (view) throw new Error("you must override the display function!");
 
-		_route(this, route);
+		this.#route = route;
 		const { root, app } = this;
 		root.empty();
 
@@ -69,9 +63,8 @@ class View extends Component {
 			} else {
 				if (component instanceof View) {
 					component.app = app;
-					component.ready.then(() => {
-						component.display({ route, context, view: this });
-					});
+					await component.ready;
+					component.display({ route, context, view: this });
 				}
 				root.append(component);
 			}
@@ -80,9 +73,8 @@ class View extends Component {
 		} else {
 			if (component instanceof View) {
 				component.app = app;
-				component.ready.then(() => {
-					component.display({ route, context, view: this });
-				});
+				await component.ready;
+				component.display({ route, context, view: this });
 			}
 			root.append(component);
 		}

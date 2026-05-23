@@ -10,22 +10,13 @@ const ATTRIBUTES = [ATTR_TARGET, ATTR_CONTEXT];
 const EVENTS = [EVENT_TO_ROUTE];
 
 class RouteLink extends Component {
-	static get observedAttributes() {
-		return ATTRIBUTES;
-	}
-
-	static get NODENAME() {
-		return NODENAME;
-	}
-
-	static get EVENTS() {
-		return EVENTS;
-	}
-
+	static observedAttributes = ATTRIBUTES;
+	static NODENAME = NODENAME;
+	static EVENTS = EVENTS;	
+	
 	constructor(setting) {
 		super(setting || {});
 		this.on("click", (event) => {
-			event.preventDefault();
 			this.trigger(EVENT_TO_ROUTE);
 		});
 	}
@@ -41,7 +32,7 @@ class RouteLink extends Component {
 	}
 
 	get context() {
-		return this.attr(ATTR_CONTEXT);
+		return this.attr(ATTR_CONTEXT) || "{}";
 	}
 
 	get refresh() {

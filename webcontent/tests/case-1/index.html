@@ -6,22 +6,24 @@
     </head>
     <body>
         
-        <template id="default">
+        <template id="default">           
             <h1>default</h1>
             <d-route-link target="other-2">other</d-route>
         </template>
 
-        <d-application route="default">
-            <d-renderer data="navigation.json" render-mode="self-replace" condition>
-                <ul>
-                    <li><d-route name="default" template="#default">default</d-route></li>
-                    <jstl jstl-foreach="${nav}" jstl-foreach-var="item">
-                        <li><d-route name="${item}" template="#${item}">${item}</d-route></li>
-                    </jstl>
-                </ul>
-            </d-renderer>
-            <d-view></d-view>
-        </d-application>
+         <d-renderer data="navigation.json" render-mode="self-replace">
+            <d-application route="default">
+                <d-renderer data="navigation.json" render-mode="self-replace" condition>
+                    <ul>
+                        <li><d-route name="default" template="#default">default</d-route></li>
+                        <jstl jstl-foreach="${nav}" jstl-foreach-var="item">
+                            <li><d-route name="${item}" template="#${item}">${item}</d-route></li>
+                        </jstl>
+                    </ul>
+                </d-renderer>
+                <d-view></d-view>
+            </d-application>
+        </d-renderer>
 
 
         <template id="other-1">
