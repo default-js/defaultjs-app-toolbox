@@ -103,6 +103,7 @@ class Application extends Component {
 		if (view == null) view = route.view;
 
 		view = view ? findView(this, view) : this.view;
+		await view.ready;
 
 		if (!refresh && view.route == route) return;
 

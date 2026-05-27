@@ -27,6 +27,9 @@ class Route extends Component {
 	async init() {
 		await super.init();
 		if (!this.#initialized) {
+			this.attr("tabindex", "0");
+			this.attr("role", "button");
+			
 			this.#initialized = true;
 			this.trigger(EVENT_INIT);
 			if (this.active) this.trigger(EVENT_CLICK);

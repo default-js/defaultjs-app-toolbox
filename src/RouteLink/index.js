@@ -14,6 +14,8 @@ class RouteLink extends Component {
 	static NODENAME = NODENAME;
 	static EVENTS = EVENTS;	
 	
+	#initialized = false;
+
 	constructor(setting) {
 		super(setting || {});
 		this.on("click", (event) => {
@@ -21,7 +23,14 @@ class RouteLink extends Component {
 		});
 	}
 
-	async init() {}
+	async init() {
+		await super.init();
+		if(!this.#initialized) {
+			this.#initialized = true;
+			this.attr("tabindex", "0");
+			this.attr("role", "button");
+		}
+	}
 
 	get view() {
 		return this.attr(ATTR_VIEW);
